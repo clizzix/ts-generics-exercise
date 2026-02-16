@@ -13,6 +13,14 @@
 //
 //    Hint: Use a generic type parameter <T>
 
+function wrapInArray<T>(value: T): T[] {
+    return [value];
+}
+const wrappedNumber = wrapInArray(5); // [5]
+const wrappedString = wrapInArray('hello'); // ["hello"]
+const wrappedBool = wrapInArray(true); // [true]
+
+console.log(wrappedNumber);
 // ----------------------------------------------------
 // 2. Create a generic function called `firstItem`
 //    It should take an array of any type and return the first element of that array.
@@ -24,6 +32,10 @@
 //    const none = firstItem([]);               // undefined
 //
 //    Hint: return type should be T | undefined
+
+function firstItem<T>(arr: T[]): T | undefined {
+    return arr[0];
+}
 
 // ----------------------------------------------------
 // 3. Create a generic function called `mergeObjects`
@@ -39,6 +51,10 @@
 //
 //    Hint: Use <T, U> as generic type parameters and return T & U
 
+const mergeObjects = <T, U>(obj1: T, obj2: U): T & U => {
+    return { ...obj1, ...obj2 };
+};
+
 // ----------------------------------------------------
 // 4. Create a type alias called `ApiResponse<T>`
 //    It should describe an object with:
@@ -52,6 +68,16 @@
 //      success: true,
 //      data: { name: "Ada", age: 36 }
 //    };
+
+type ApiResponse<T> = {
+    success: boolean;
+    data: T;
+};
+
+const userResponse: ApiResponse<{ name: string; age: number }> = {
+    success: true,
+    data: { name: 'Ada', age: 36 },
+};
 // ----------------------------------------------------
 // 5. Create a generic function called `pluck`
 //    It should take an object and a key, and return the value at that key.
@@ -67,3 +93,7 @@
 //
 //    Hint: Function signature will look something like:
 //    function pluck<T, K extends keyof T>(obj: T, key: K): ????
+
+const pluck = <T, K extends keyof T>(obj: T, key: K): T[K] => {
+    return obj[key];
+};
